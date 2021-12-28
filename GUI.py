@@ -1,4 +1,5 @@
 import random
+from typing import List
 
 import pygame
 from pygame import *
@@ -10,7 +11,6 @@ from tkinter import messagebox
 from Button import Button
 from MenuItem import MenuItem
 from constants import *
-from GraphAlgo import *
 import matplotlib.backends.backend_agg as agg
 import pylab
 
@@ -52,7 +52,6 @@ class GUI:
         user_input = simpledialog.askstring(title="Insert", prompt="Insert file name")
 
         if user_input is not None:
-            print(user_input)
             check = user_input.split(".")
             if check[len(check) - 1] == "json":
                 self.algo.load_from_json(user_input)
@@ -127,8 +126,6 @@ class GUI:
         self.plot()
 
     def find_shortest_path(self):
-        # root = tk.Tk()
-        # root.withdraw()
         edge_src = simpledialog.askinteger(title="Shortest Path Input", prompt="Insert Source Node ID!")
         if edge_src is None:
             return
@@ -216,11 +213,11 @@ class GUI:
         surf = pygame.image.fromstring(raw_data, size, "RGB")
         self.surf = surf
 
-    def __init__(self, algo: GraphAlgo = None):
-        if algo is None:
-            self.algo = GraphAlgo()
-        else:
-            self.algo = algo
+    def __init__(self,algo):
+        #if algo is None:
+        self.algo = algo
+        #else:
+        #    self.algo = algo
         pygame.init()
         self.clock = pygame.time.Clock()
 

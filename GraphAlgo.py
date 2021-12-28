@@ -25,7 +25,7 @@ class Stack:
         return len(self._stack) == 0
 
 
-def permutations(source: List[int], connected_nodes: List[bool]):
+def perms(source: List[int], connected_nodes: List[bool]):
     if len(source) == 0:
         return []
 
@@ -40,7 +40,7 @@ def permutations(source: List[int], connected_nodes: List[bool]):
             continue
         rec = source[:i] + source[i + 1:]
 
-        for p in permutations(rec, connected_nodes):
+        for p in perms(rec, connected_nodes):
             ret.append([current] + p)
 
     return ret
@@ -128,7 +128,7 @@ class GraphAlgo(GraphAlgoInterface):
         chosen_dist = float('inf')
         chosen_perm = []
         ran = range(len(node_lst) - 1)
-        all_perms = permutations(node_lst, connected_nodes)
+        all_perms = perms(node_lst, connected_nodes)
         for perm_index in range(len(all_perms)):
             current_dist = 0
             for i in ran:
@@ -231,8 +231,6 @@ class GraphAlgo(GraphAlgoInterface):
             current_edges = nodes[node_key].get_edges_out()
             for edge_key in current_edges:
                 ret[node_key][edge_key] = current_edges[edge_key].get_weight()
-        # for edge in edges:
-        #     ret[edge.get_src()][edge.get_dest()] = edge.get_weight()
 
         for i in range(self._graph.v_size()):
             ret[i][i] = 0
@@ -244,4 +242,3 @@ class GraphAlgo(GraphAlgoInterface):
                         ret[j][k] = ret[j][i] + ret[i][k]
 
         return ret
-
